@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": "./client",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx"
+  },
+  "include": ["client/src/**/*", "client/vite.config.js"],
+  "exclude": ["node_modules"]
+}
