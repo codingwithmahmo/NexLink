@@ -10,7 +10,7 @@ const Login = () => {
 
       {/* left side: branding */}
       <div className='flex-1 flex flex-col items-start justify-between pt-12 pb-16 px-8 md:pt-16 md:pb-20 md:px-12 lg:pl-32 lg:pr-8'>
-        <img src={assets.logo} alt="NexLink Logo" className='h-35 md:h-35 object-contain' />
+        <img src={assets.logo} alt="NexLink Logo" className='h-35 md:h-40 object-contain' />
         <div className='flex items-center gap-3'>
           <img src={assets.group_users} alt="UserGroup" className='h-10 md:h-11' />
           <div>
