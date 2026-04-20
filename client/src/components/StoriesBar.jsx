@@ -4,20 +4,24 @@ import { dummyStoriesData } from '../assets/assets'
 import React from 'react'
 import {useState, useEffect} from 'react'
 import moment from 'moment'
+import StoryModal from './StoryModal'
 
 const StoriesBar = () => {
 
     const [stories, setStories] = useState([])
+    const [showModal, setShowModal] = useState(false)
+    const [viewStory, setViewStory] = useState(null)
+
     const fetchStories = async()=> {setStories(dummyStoriesData)}
 
     useEffect(() => {fetchStories()},[])
     return (
-        <div className='w-screen sm-w-[calc(100vw-240px)] md:px-2 lg:max-w-2xl no-scrollbar overflow-x-auto px-5' >
-            <div className='flex gap-4 pb-5'>
+        <div className='w-screen sm-w-[calc(100vw-240px)] md:py-2 px-0 lg:max-w-2xl no-scrollbar overflow-x-auto px-2' >
+            <div className='flex gap-2 pb-3'>
 
-                {/*Story cards content goes here*/}
-                <div className='rounded-2xl shadow-sm min-w-30 max-w-50 max-h-50 aspect-[3/4] cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-indigo-800 bg-gradient-to-b from-indigo-50 to-white'>
-                    <div className='h-full flex flex-col items-center justify-center p-4'>
+                {/*----------STORY CARD CONTENT-----------*/}
+                <div onClick={() => setShowModal(true)} className='rounded-2xl shadow-sm min-w-30 max-w-50 max-h-50 aspect-[3/4] cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-indigo-800 bg-gradient-to-b from-indigo-50 to-white'>
+                    <div className='h-full flex flex-col items-center justify-center p-2'>
                         <div className='size-10 bg-indigo-800 rounded-full flex items-center justify-center mb-3'>
                             <Plus className='w-5 h-5 text-white' />
                         </div>
@@ -47,6 +51,9 @@ const StoriesBar = () => {
                     ))
                 }
             </div>
+
+            {/* Story Modal goes here */}
+            {showModal && <StoryModal setShowModal={setShowModal} fetchStories={fetchStories} />}
         </div>
     )
 }
