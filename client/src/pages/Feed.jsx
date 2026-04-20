@@ -1,6 +1,7 @@
 import Loading from '../components/Loading'
 import {dummyPostsData } from '../assets/assets'
 import React, { useEffect, useState } from 'react'
+import StoriesBar from '../components/StoriesBar'
 
 const Feed = () => {
   //use state Functions for both feeds and loading state
@@ -23,21 +24,27 @@ const Feed = () => {
   }
 
   //use effect for fetching the feeds data when the component mounts and also when the page is refreshed
-  useEffect(() => {
-    fetchFeeds()
-  }, [])
+  useEffect(()=>{fetchFeeds()},[])
 
   //this checks if the loading state is not true then execute the statement inside
   return !loading ? (
     <div className='h-full overflow-y-scroll no-scrollbar py-10 xl:pr-5 flex items-start justify-center xl:gap-8'>
+      
       {/* Stories & Post List goes here */}
       <div>
-        <h1>Stories here</h1>
+        <StoriesBar />
         <div className='p-4 space-y-6'>
           
         </div>
       </div>
+
       {/* Right Sidebar Content goes here */}
+      <div>
+        <div>
+          <h1>Sponsored</h1>
+        </div>
+        <h1>Recent Messages</h1>
+      </div>
     </div>
   ) : <Loading />
 }
