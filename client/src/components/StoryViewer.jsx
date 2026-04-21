@@ -1,17 +1,77 @@
 //ReactJS Code for the part where the User can view other's story as well
 import { BadgeCheck, X } from 'lucide-react'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const StoryViewer = ({viewStory, setViewStory}) => {
-  return (
+    
+    //State declared here to manange progress bar setting
+    const [progress,setProgress] = useState(0)
+
+    useEffect(()=>{
+        let time, progressInterval;
+
+        if(viewStory && viewStory.media_type !== 'video'){
+            setProgress(0)
+
+            // set duration to 10ms
+            const duration = 10000;
+            const setTime= 100; // update progress every 100ms
+            let elapsed = 0;
+
+            progressInterval = setInterval(()=>{
+                elapsed = elapsed + setTime;
+                setProgress((elapsed/duration) * 100);
+            },setTime);
+
+            // Close story after duration is over
+            time = setTimeout(()=>{
+                setViewStory(null)
+            },duration)
+        }
+        return () => {
+            clearTimeout(time);
+            clearInterval(progressInterval);
+        }
+    },[viewStory,setViewStory])
+
+    // Functional Logic for the 'X' button to close the story when viewed
+    const handleClose = () => {
+        setViewStory(null)
+    }
+
+    if(!viewStory) return null;
+    const renderContent = () => {
+        switch (viewStory.media_type) {
+            case 'image':
+                return(
+                    <img src={viewStory.media_url} className='max-w-full max-h-screen object-contain' />
+                );
+            case 'video':
+                return(
+                    <video onEnded={()=>setViewStory(null)} src={viewStory.media_url} className='max-h-screen' controls autoPlay/>
+                );
+
+            case 'text':
+                return(
+                    <div className='w-full h-full flex items-center justify-center p-8 text-white text-2xl text-center'>
+                        {viewStory.content}
+                    </div>
+                );
+
+            default:
+                return null;
+        }
+    };
+    return (
     <div className='fixed inset-0 h-screen bg-black bg-opacity-90 z-110 flex items-center justify-center' style={{backgroundColor: viewStory.media_type === 'text'? viewStory.background_color:'#000000'}}>
         
         {/* Progress Bar code comes here */}
         <div className='absolute top-0 left-0 w-full h-1 bg-gray-700'>
-            <div className='h-full bg-white transition-all duration-200 linear' style={{width: '50%'}}>
+            <div className='h-full bg-white transition-all duration-200 linear' style={{width: `${progress}%`}}>
 
             </div>
         </div>
+
         {/* User Info - Top left (code here) */}
         <div className='absolute text-white top-4 left-4 flex items-center gap-3 p-2 px-5 sm:p-4 sm:px-8 backdrop-blur-2xl rounded-4xl'>
             <img src={viewStory.user?.profile_picture} alt="" className='size-10 sm:size-10 rounded-full object-cover border border-white' />
@@ -20,10 +80,16 @@ const StoryViewer = ({viewStory, setViewStory}) => {
                 <BadgeCheck size={18} className='w-5 text-white' />
             </div>
         </div>
+
         {/* Close button for closing story */}
-        <button onClick={() => setViewStory(null)} className='absolute top-7 right-4 text-white text-3xl font-bold focus:outline-none' >
+        <button onClick={handleClose} className='absolute top-7 right-4 text-white text-3xl font-bold focus:outline-none' >
             <X className='w-8 h-8 hover:scale-110 transition cursor-pointer text-white' />
         </button>
+
+        {/* Story Content goes here */}
+        <div className='max-w-[90vw] max-h-[90vh] text-white flex items-center justify-center'>
+            {renderContent()}
+        </div>
     </div>
   )
 }
