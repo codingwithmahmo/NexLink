@@ -8,7 +8,7 @@ const StoryViewer = ({viewStory, setViewStory}) => {
         
         {/* Progress Bar code comes here */}
         <div className='absolute top-0 left-0 w-full h-1 bg-gray-700'>
-            <div className='h-full bg-white transition-all duration-100 linear' style={{width: '50%'}}>
+            <div className='h-full bg-white transition-all duration-200 linear' style={{width: '50%'}}>
 
             </div>
         </div>
