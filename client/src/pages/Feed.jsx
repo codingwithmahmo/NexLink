@@ -1,7 +1,9 @@
 import Loading from '../components/Loading'
-import {dummyPostsData } from '../assets/assets'
+import {assets, dummyPostsData } from '../assets/assets'
 import React, { useEffect, useState } from 'react'
 import StoriesBar from '../components/StoriesBar'
+import PostCard from '../components/PostCard'
+import RecentMessages from '../components/RecentMessages'
 
 const Feed = () => {
   //use state Functions for both feeds and loading state
@@ -34,16 +36,27 @@ const Feed = () => {
       <div>
         <StoriesBar />
         <div className='p-4 space-y-6'>
-          
+          {feeds.map((feed) => (
+            <PostCard key={feed.id} post={feed} />
+          ))}
         </div>
       </div>
 
       {/* Right Sidebar Content goes here */}
-      <div>
-        <div>
-          <h1>Sponsored</h1>
+      <div className='max-xl:hidden sticky top-0'>
+        
+        {/* Sponsored Content */}
+        <div className='max-w-xs bg-white text-xs p-4 rounded-md inline-flex flex-col gap-2 shadow'>
+          <h3 className='text-slate-800 font-semibold'>Sponsored</h3>
+          <img src={assets.sponsored_img} className='w-75 h-50 rounded-2xl' alt="" />
+          <p className='text-slate-600'>Email Marketing</p>
+          <p className='text-slate-400'>Supercharging your marketing with a powerful,
+            easy-to-use platform built for success
+          </p>
         </div>
-        <h1>Recent Messages</h1>
+
+        {/* Recent Messages */}
+        <RecentMessages />
       </div>
     </div>
   ) : <Loading />
