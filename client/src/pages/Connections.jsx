@@ -75,7 +75,7 @@ const Connections = () => {
                 }
 
                 {
-                  currentTab === 'Pending' && (
+                  currentTab === 'Pending Requests' && (
                     <button className='w-full p-2 text-sm rounded-3xl bg-slate-100 hover:bg-slate-300 text-black active:scale-95 transition cursor-pointer'>
                       Accept
                     </button>
@@ -84,7 +84,7 @@ const Connections = () => {
 
                 {
                   currentTab === 'Connections' && (
-                    <button className='w-full p-2 text-sm rounded-3xl bg-slate-100 hover:bg-slate-300 text-black active:scale-95 transition cursor-pointer flex items-center justify-center gap-1'>
+                    <button onClick={()=>navigate(`/messages/${user._id}`)} className='w-full p-2 text-sm rounded-3xl bg-slate-100 hover:bg-slate-300 text-black active:scale-95 transition cursor-pointer flex items-center justify-center gap-1'>
                       <MessageCircle className='w-4 h-4' />
                       Message
                     </button>
